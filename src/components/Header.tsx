@@ -13,7 +13,7 @@ const Header: React.FC = () => {
       />
       <form action="submit" className="flex items-center w-2/4 gap-2 max-md:flex-col">
         <Input type="search" placeholder="Search for a recipe.." className="min-w-62" />
-        <Button type="submit" className="max-md:min-w-62">Search</Button>
+        <Button type="submit" className="cursor-pointer max-md:min-w-62">Search</Button>
       </form>
     </header>
   );

@@ -1,5 +1,11 @@
-export { default as Navbar } from './Navbar'
-export { default as Header } from './Header'
-export { default as Categories } from './Categories'
-export { default as CategoryCard } from './CategoryCard'
-export { default as CategoryCardSkeleton } from './CategoryCardSkeleton'
+export { default as Navbar } from "./Navbar";
+export { default as Header } from "./Header";
+export { default as Categories } from "./Categories";
+export { default as CategoryCard } from "./CategoryCard";
+export { default as CategoryCardSkeleton } from "./CategoryCardSkeleton";
+export { default as Meals } from "./Meals";
+export { default as MealCard } from "./MealCard";
+export { default as MealCardSkeleton } from "./MealCardSkeleton";
+export { default as RecipeModal } from "./RecipeModal";
+export { default as RecipeModalSkeleton } from "./RecipeModalSkeleton";
+export { default as ErrorComponent } from "./ErrorComponent";
