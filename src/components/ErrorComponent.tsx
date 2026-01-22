@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 const ErrorComponent = ({
   componentName,
   componentError,
+  retryValue,
   onRetry,
   retryFetch
 }: ErrorComponentProps) => {
@@ -19,7 +20,7 @@ const ErrorComponent = ({
       <Button
         onClick={() => {
           onRetry(null);
-          retryFetch((prev: boolean) => !prev)
+          retryFetch(!retryValue)
         }}
         variant="outline"
       >

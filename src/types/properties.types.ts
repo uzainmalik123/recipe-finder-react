@@ -1,6 +1,8 @@
+import type React from "react";
 import type { Category } from "./category.types";
 import type { Meal } from "./meal.types";
 import type { RecipeDetails } from "./recipe.types";
+import type { ReactNode } from "react";
 
 export interface CategoriesProps {
   categoryLoading: boolean;
@@ -27,6 +29,8 @@ export interface MealsProps {
   selectedCategory: string | null;
   currentPage: number;
   totalPages: number;
+  notFound: boolean;
+  retryMeals: boolean;
   setCurrentPage: (page: number) => void;
   setSelectedRecipe: (recipeId: string) => void;
   setMealsError: (error: string | null) => void;
@@ -45,6 +49,7 @@ export interface RecipeModalProps {
   open: boolean;
   recipeLoading: boolean;
   recipeError: string | null;
+  retryRecipe: boolean;
   setRecipeError: (error: string | null) => void;
   onOpenChange: (open: boolean) => void;
   selectedRecipe: (recipeId: string) => void;
@@ -54,6 +59,15 @@ export interface RecipeModalProps {
 export interface ErrorComponentProps {
   componentName: string;
   componentError: string | null;
+  retryValue: boolean;
   onRetry: (error: string | null) => void;
-  retryFetch: (retry: (prev: boolean) => boolean) => void;
+  retryFetch: (prev: boolean) => void;
+}
+
+export interface HeaderProps {
+  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+export interface AuthProviderProps {
+  children: ReactNode;
 }

@@ -21,10 +21,12 @@ const Meals = ({
   selectedCategory,
   totalPages,
   currentPage,
+  notFound,
+  retryMeals,
   setCurrentPage,
   setSelectedRecipe,
   setMealsError,
-  setRetryMeals
+  setRetryMeals,
 }: MealsProps) => {
   const mealHeading = useRef<HTMLDivElement>(null);
 
@@ -34,9 +36,13 @@ const Meals = ({
     });
   }, [currentPage]);
 
-  if (!selectedCategory) {
+  if (!selectedCategory && meals.length === 0) {
     return (
-      <p>Please search for a meal or select a category to display meals.</p>
+      <p>
+        {!mealsError && !mealsLoading && !notFound
+          ? `Please search for a meal or select a category to display meals.`
+          : `No meals with this name found, Kindly check for typos.`}
+      </p>
     );
   }
 
@@ -67,8 +73,9 @@ const Meals = ({
             <ErrorComponent
               componentName="meals"
               componentError={mealsError}
+              retryValue={retryMeals}
               onRetry={setMealsError}
-              retryFetch={() => setRetryMeals}
+              retryFetch={setRetryMeals}
             />
           )}
         </div>

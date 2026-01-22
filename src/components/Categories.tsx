@@ -11,9 +11,10 @@ const Categories = ({
   categoryError,
   categories,
   selectedCategory,
+  retryCategory,
   setSelectedCategory,
   setCategoryError,
-  setRetryCategory
+  setRetryCategory,
 }: CategoriesProps) => {
   return (
     <section className="flex flex-col gap-6 items-center">
@@ -38,6 +39,7 @@ const Categories = ({
           <ErrorComponent
             componentName="category"
             componentError={categoryError}
+            retryValue={retryCategory}
             onRetry={setCategoryError}
             retryFetch={() => setRetryCategory}
           />

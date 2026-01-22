@@ -19,6 +19,7 @@ const RecipeModal = ({
   recipe,
   recipeLoading,
   recipeError,
+  retryRecipe,
   setRecipeError,
   onOpenChange,
   setRetryRecipe
@@ -203,6 +204,7 @@ const RecipeModal = ({
             <ErrorComponent
               componentName="recipe"
               componentError={recipeError}
+              retryValue={retryRecipe}
               onRetry={setRecipeError}
               retryFetch={() => setRetryRecipe}
             />
