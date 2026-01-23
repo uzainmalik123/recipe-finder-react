@@ -9,3 +9,4 @@ export { default as MealCardSkeleton } from "./MealCardSkeleton";
 export { default as RecipeModal } from "./RecipeModal";
 export { default as RecipeModalSkeleton } from "./RecipeModalSkeleton";
 export { default as ErrorComponent } from "./ErrorComponent";
+export { default as LoginForm } from "./LoginForm";

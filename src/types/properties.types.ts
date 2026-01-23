@@ -3,6 +3,7 @@ import type { Category } from "./category.types";
 import type { Meal } from "./meal.types";
 import type { RecipeDetails } from "./recipe.types";
 import type { ReactNode } from "react";
+import type { User } from "firebase/auth";
 
 export interface CategoriesProps {
   categoryLoading: boolean;
@@ -70,4 +71,18 @@ export interface HeaderProps {
 
 export interface AuthProviderProps {
   children: ReactNode;
+}
+
+export interface LoginFormProps {
+  setOpenLogin: (value: boolean) => void;
+}
+
+export interface SignupFormProps {
+  setOpenSignup: (value: boolean) => void;
+}
+
+export interface NavbarProps {
+  currentUser: User | null;
+  userLoggedIn: boolean;
+  logout: () => Promise<void>;
 }

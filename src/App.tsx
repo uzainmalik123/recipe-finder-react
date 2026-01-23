@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Header, Categories, Meals, RecipeModal } from "./components";
+import { Header, Categories, Meals, RecipeModal, Navbar } from "./components";
 
 import type { RecipeDetails, RecipeApiResponse } from "./types/recipe.types";
 import type { ApiResponse, Category } from "./types/category.types";
 import type { MealsResponse, Meal } from "./types/meal.types";
 
 import { recipeTransformer } from "./utils/recipeTransformer";
-import { AuthProvider } from "./contexts/AuthContext";
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   const [error, setError] = useState<string | null>(null);
@@ -34,6 +34,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState<FormDataEntryValue | null>(
     null
   );
+
+  const { currentUser, userLoggedIn, logout } = useAuth()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -190,8 +192,12 @@ function App() {
   const totalPages = Math.ceil(meals.length / mealsPerPage);
 
   return (
-    <AuthProvider>
-      <main className="App w-full max-w-480 h-full flex flex-col items-center py-10 px-20 gap-10 max-[640px]:px-10 max-[500px]:px-5">
+      <main className="App w-full max-w-480 h-full flex flex-col items-center pb-10 px-20 gap-10 max-[640px]:px-10 max-[500px]:px-5">
+        <Navbar
+          currentUser={currentUser}
+          userLoggedIn={userLoggedIn}
+          logout={logout}
+        />
         <Header handleFormSubmit={handleFormSubmit} />
         <Meals
           meals={currentMeals}
@@ -234,7 +240,6 @@ function App() {
             <p>No Recipes found!</p>
           ))}
       </main>
-    </AuthProvider>
   );
 }
 

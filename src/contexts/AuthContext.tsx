@@ -30,7 +30,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [userLoggedIn, setUserLoggedIn] = useState(false)
     const [loading, setLoading] = useState(true)
 
-    function initializaUser(user: User | null) {
+    function initializeUser(user: User | null) {
         if (user) {
             setCurrentUser(user)
             setUserLoggedIn(true)
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, initializaUser)
+        const unsubscribe = onAuthStateChanged(auth, initializeUser)
         return unsubscribe
     }, [])
 
