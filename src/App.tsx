@@ -159,6 +159,7 @@ function App() {
 
         if (!data && searchQuery) {
           setNotFound(true);
+          setMeals([])
           return;
         } else if (!data) {
           return;
