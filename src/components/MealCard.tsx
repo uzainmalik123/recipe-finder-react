@@ -18,7 +18,6 @@ const MealCard = ({
   onMealSelect,
 }: MealCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { userLoggedIn, currentUser } = useAuth();
 
   useEffect(() => {
@@ -41,8 +40,6 @@ const MealCard = ({
     }
 
     try {
-      setLoading(true);
-
       if (isFavorite) {
         await removeFavorite(currentUser!.uid, idMeal);
         setIsFavorite(false);
@@ -60,8 +57,6 @@ const MealCard = ({
       toast.error("Error", {
         description: `Failed to update favorites, ${error}`,
       });
-    } finally {
-      setLoading(false);
     }
   };
 
