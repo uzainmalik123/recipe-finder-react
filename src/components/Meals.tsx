@@ -39,8 +39,8 @@ const Meals = ({
 
   if (!selectedCategory && meals?.length === 0) {
     return (
-      <p>
-        {!mealsError && !mealsLoading && !notFound
+      <p className="text-center">
+        {!mealsError && !mealsLoading && !notFound && meals.length === 0 && !showFavorites
           ? `Please search for a meal or select a category to display meals.`
           : `No meals with this name found, Kindly check for typos.`}
       </p>
@@ -56,6 +56,9 @@ const Meals = ({
         >
           {showFavorites ? "Favorites:" : "Meals:"}
         </h2>
+        {meals.length === 0 && showFavorites
+          && <p className="text-center">No favorite recipes.</p>
+        }
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {mealsLoading && !mealsError
             ? Array.from({ length: 14 }).map((_, index) => (

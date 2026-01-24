@@ -31,7 +31,7 @@ const Navbar = ({
   };
 
   return (
-    <nav className="max-w-480 w-full h-20 gap-3 flex items-center justify-end">
+    <nav className="max-w-230 w-full h-20 gap-3 flex items-center justify-end">
       {!currentUser && !userLoggedIn ? (
         <>
           {" "}
