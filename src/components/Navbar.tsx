@@ -5,8 +5,14 @@ import { LoginForm } from "./../components";
 import SignupForm from "./SignupForm";
 import type { NavbarProps } from "@/types/properties.types";
 import { toast } from "sonner";
+import { Heart } from "lucide-react";
 
-const Navbar = ({ currentUser, userLoggedIn, logout }: NavbarProps) => {
+const Navbar = ({
+  currentUser,
+  userLoggedIn,
+  logout,
+  setShowFavorites
+}: NavbarProps) => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
 
@@ -53,9 +59,15 @@ const Navbar = ({ currentUser, userLoggedIn, logout }: NavbarProps) => {
           </Dialog>
         </>
       ) : (
-        <Button onClick={handleLogout} className="bg-secondary cursor-pointer">
-          Logout
-        </Button>
+        <div className="flex justify-between gap-3">
+          <Button onClick={() => setShowFavorites(true)} className="cursor-pointer"><Heart className="w-4 h-4" />Favorites</Button>
+          <Button
+            onClick={handleLogout}
+            className="bg-secondary cursor-pointer"
+          >
+            Logout
+          </Button>
+        </div>
       )}
     </nav>
   );

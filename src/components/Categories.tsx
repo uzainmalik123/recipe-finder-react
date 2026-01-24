@@ -15,6 +15,7 @@ const Categories = ({
   setSelectedCategory,
   setCategoryError,
   setRetryCategory,
+  setShowFavorites,
 }: CategoriesProps) => {
   return (
     <section className="flex flex-col gap-6 items-center">
@@ -31,8 +32,9 @@ const Categories = ({
                 key={category.idCategory}
                 categoryName={category.strCategory}
                 categoryThumbnail={category.strCategoryThumb}
-                onCategoryClick={setSelectedCategory}
                 isSelected={selectedCategory === category.strCategory}
+                onCategoryClick={setSelectedCategory}
+                setShowFavorites={setShowFavorites}
               />
             ))}
         {categoryError && (

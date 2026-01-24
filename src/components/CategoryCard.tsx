@@ -5,7 +5,13 @@ const CategoryCard = ({
   categoryThumbnail,
   isSelected,
   onCategoryClick,
+  setShowFavorites,
 }: CategoryCardProps) => {
+  const handleCategoryClick = (categoryName: string) => {
+    onCategoryClick(categoryName);
+    setShowFavorites(false);
+  };
+
   return (
     <button
       className={`bg-no-repeat bg-position-[center_top_0.5rem] bg-contain relative group
@@ -15,7 +21,7 @@ const CategoryCard = ({
        hover:scale-105
       ${isSelected && "outline-2 outline-background"}
        `}
-      onClick={() => onCategoryClick(categoryName)}
+      onClick={() => handleCategoryClick(categoryName)}
       style={{ backgroundImage: `url(${categoryThumbnail})` }}
     >
       <h3

@@ -18,6 +18,7 @@ const Meals = ({
   mealsLoading,
   mealsError,
   meals,
+  showFavorites,
   selectedCategory,
   totalPages,
   currentPage,
@@ -36,7 +37,7 @@ const Meals = ({
     });
   }, [currentPage]);
 
-  if (!selectedCategory && meals.length === 0) {
+  if (!selectedCategory && meals?.length === 0) {
     return (
       <p>
         {!mealsError && !mealsLoading && !notFound
@@ -53,7 +54,7 @@ const Meals = ({
           className="font-bricolage-grotesque text-3xl font-semibold"
           ref={mealHeading}
         >
-          Meals:
+          {showFavorites ? "Favorites:" : "Meals:"}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {mealsLoading && !mealsError

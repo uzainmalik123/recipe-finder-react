@@ -5,8 +5,11 @@ import type { RecipeDetails, RecipeApiResponse } from "./types/recipe.types";
 import type { ApiResponse, Category } from "./types/category.types";
 import type { MealsResponse, Meal } from "./types/meal.types";
 
+import { getUserFavorites } from "@/services/favoritesService";
 import { recipeTransformer } from "./utils/recipeTransformer";
+import { transformFavoritesToMeals } from "./utils/favoriteTransformer";
 import { useAuth } from "./contexts/AuthContext";
+import { toast } from "sonner";
 
 function App() {
   const [error, setError] = useState<string | null>(null);
@@ -34,8 +37,9 @@ function App() {
   const [searchQuery, setSearchQuery] = useState<FormDataEntryValue | null>(
     null
   );
+  const [showFavorites, setShowFavorites] = useState(false);
 
-  const { currentUser, userLoggedIn, logout } = useAuth()
+  const { currentUser, userLoggedIn, logout } = useAuth();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -140,8 +144,7 @@ function App() {
       try {
         if (!searchQuery) return;
         setMealsLoading(true);
-
-        console.log(searchQuery);
+        setShowFavorites(false)
 
         const response = await fetch(
           `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`
@@ -163,7 +166,7 @@ function App() {
 
         setMeals(data);
         setMealsError(null);
-        setNotFound(false)
+        setNotFound(false);
       } catch (err) {
         setMealsError(
           err instanceof Error ? err.message : "Failed to fetch categories"
@@ -176,6 +179,40 @@ function App() {
 
     fetchMealByName();
   }, [searchQuery]);
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      if (!currentUser) {
+        setMealsLoading(false);
+        return;
+      }
+
+      if (!showFavorites) {
+        setMealsLoading(false);
+        return;
+      }
+
+      try {
+        setMealsLoading(true);
+        const userFavorites = await getUserFavorites(currentUser.uid);
+        const transformedMeals = transformFavoritesToMeals(userFavorites);
+        setMeals(transformedMeals);
+        setMealsError(null);
+      } catch (error) {
+        setMealsError(
+          error instanceof Error ? error.message : "Failed to load favorites"
+        );
+        console.error("Error loading favorites:", error);
+        toast.error("Error", {
+          description: `Error loading favorites:, ${error}`,
+        });
+      } finally {
+        setMealsLoading(false);
+      }
+    };
+
+    loadFavorites();
+  }, [currentUser, showFavorites]);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -192,54 +229,57 @@ function App() {
   const totalPages = Math.ceil(meals.length / mealsPerPage);
 
   return (
-      <main className="App w-full max-w-480 h-full flex flex-col items-center pb-10 px-20 gap-10 max-[640px]:px-10 max-[500px]:px-5">
-        <Navbar
-          currentUser={currentUser}
-          userLoggedIn={userLoggedIn}
-          logout={logout}
-        />
-        <Header handleFormSubmit={handleFormSubmit} />
-        <Meals
-          meals={currentMeals}
-          mealsError={mealsError}
-          mealsLoading={mealsLoading}
-          selectedCategory={selectedCategory}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          notFound={notFound}
-          retryMeals={retryMeals}
-          setCurrentPage={setCurrentPage}
-          setSelectedRecipe={setSelectedRecipe}
-          setMealsError={setMealsError}
-          setRetryMeals={setRetryMeals}
-        />
-        <Categories
-          categoryLoading={loading}
-          categoryError={error}
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          setCategoryError={setError}
-          retryCategory={retryCategory}
-          setRetryCategory={setRetryCategory}
-        />
-        {selectedRecipe &&
-          (recipe ? (
-            <RecipeModal
-              open={openModal}
-              recipe={recipe}
-              recipeLoading={recipeLoading}
-              recipeError={recipeError}
-              retryRecipe={retryRecipe}
-              onOpenChange={setOpenModal}
-              setRecipeError={setRecipeError}
-              selectedRecipe={setSelectedRecipe}
-              setRetryRecipe={setRetryRecipe}
-            />
-          ) : (
-            <p>No Recipes found!</p>
-          ))}
-      </main>
+    <main className="App w-full max-w-480 h-full flex flex-col items-center pb-10 px-20 gap-10 max-[640px]:px-10 max-[500px]:px-5">
+      <Navbar
+        currentUser={currentUser}
+        userLoggedIn={userLoggedIn}
+        logout={logout}
+        setShowFavorites={setShowFavorites}
+      />
+      <Header handleFormSubmit={handleFormSubmit} />
+      <Meals
+        meals={currentMeals}
+        mealsError={mealsError}
+        mealsLoading={mealsLoading}
+        selectedCategory={selectedCategory}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        notFound={notFound}
+        retryMeals={retryMeals}
+        showFavorites={showFavorites}
+        setCurrentPage={setCurrentPage}
+        setSelectedRecipe={setSelectedRecipe}
+        setMealsError={setMealsError}
+        setRetryMeals={setRetryMeals}
+      />
+      <Categories
+        categoryLoading={loading}
+        categoryError={error}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        retryCategory={retryCategory}
+        setSelectedCategory={setSelectedCategory}
+        setCategoryError={setError}
+        setRetryCategory={setRetryCategory}
+        setShowFavorites={setShowFavorites}
+      />
+      {selectedRecipe &&
+        (recipe ? (
+          <RecipeModal
+            open={openModal}
+            recipe={recipe}
+            recipeLoading={recipeLoading}
+            recipeError={recipeError}
+            retryRecipe={retryRecipe}
+            onOpenChange={setOpenModal}
+            setRecipeError={setRecipeError}
+            selectedRecipe={setSelectedRecipe}
+            setRetryRecipe={setRetryRecipe}
+          />
+        ) : (
+          <p>No Recipes found!</p>
+        ))}
+    </main>
   );
 }
 

@@ -14,6 +14,7 @@ export interface CategoriesProps {
   setSelectedCategory: (categoryName: string) => void;
   setCategoryError: (error: string | null) => void;
   setRetryCategory: (retry: boolean) => void;
+  setShowFavorites: (value: boolean) => void;
 }
 
 export interface CategoryCardProps {
@@ -21,17 +22,19 @@ export interface CategoryCardProps {
   categoryThumbnail: string;
   isSelected: boolean;
   onCategoryClick: (categoryName: string) => void;
+  setShowFavorites: (value: boolean) => void;
 }
 
 export interface MealsProps {
   mealsLoading: boolean;
   mealsError: string | null;
-  meals: Meal[];
+  meals: Meal[] | [];
   selectedCategory: string | null;
   currentPage: number;
   totalPages: number;
-  notFound: boolean;
+  notFound: boolean | null;
   retryMeals: boolean;
+  showFavorites: boolean;
   setCurrentPage: (page: number) => void;
   setSelectedRecipe: (recipeId: string) => void;
   setMealsError: (error: string | null) => void;
@@ -85,4 +88,17 @@ export interface NavbarProps {
   currentUser: User | null;
   userLoggedIn: boolean;
   logout: () => Promise<void>;
+  setShowFavorites: (value: boolean) => void;
+}
+
+export interface FavoritesProps {
+  mealsLoading: boolean;
+  mealsError: string | null;
+  currentPage: number;
+  totalPages: number;
+  retryMeals: boolean;
+  setCurrentPage: (page: number) => void;
+  setSelectedRecipe: (recipeId: string) => void;
+  setMealsError: (error: string | null) => void;
+  setRetryMeals: (retry: boolean) => void;
 }
