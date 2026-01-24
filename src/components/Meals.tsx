@@ -35,7 +35,7 @@ const Meals = ({
     mealHeading.current?.scrollIntoView({
       behavior: "smooth",
     });
-  }, [currentPage]);
+  }, [currentPage, selectedCategory]);
 
   if (!selectedCategory && meals?.length === 0) {
     return (

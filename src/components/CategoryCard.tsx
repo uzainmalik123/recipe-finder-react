@@ -7,6 +7,7 @@ const CategoryCard = ({
   onCategoryClick,
   setShowFavorites,
 }: CategoryCardProps) => {
+  
   const handleCategoryClick = (categoryName: string) => {
     onCategoryClick(categoryName);
     setShowFavorites(false);
