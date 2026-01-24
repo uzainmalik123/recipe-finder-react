@@ -145,6 +145,7 @@ function App() {
         if (!searchQuery) return;
         setMealsLoading(true);
         setShowFavorites(false)
+        setCurrentPage(1)
 
         const response = await fetch(
           `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchQuery}`
