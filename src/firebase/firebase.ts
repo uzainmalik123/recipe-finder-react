@@ -2,11 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
+const apiKey = import.meta.env.VITE_GOOGLE_FIREBASE_API;
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBeosh4mXZshOnzHPHhTktIgYIvDCH7_3E",
+  apiKey: apiKey,
   authDomain: "u-recipe-finder.firebaseapp.com",
   projectId: "u-recipe-finder",
   storageBucket: "u-recipe-finder.firebasestorage.app",
